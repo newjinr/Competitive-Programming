@@ -60,19 +60,18 @@ void drillingMotorOnOff(byte x)
 
 void load()
 {
-    // drillingMotorOnOff(1);
     if (digitalRead(irSensor) == 1)
         dMotorStart = false;
 
     if (dMotorStart)
+        digitalWrite(relay, LOW);
+    else if (!dMotorStart || digitalRead(magnetic2) == 0)
         digitalWrite(relay, HIGH);
-    // else if (!dMotorStart || digitalRead(magnetic2) == 0)
-    //   digitalWrite(relay, LOW);
 
     if (start || digitalRead(magnetic2) == 0)
     {
         dMotorStart = false;
-        digitalWrite(relay, LOW);
+        digitalWrite(relay, HIGH);
         while (digitalRead(irSensor) == 0)
             motorOn(1, 0);
         j = 40;
